@@ -6,8 +6,8 @@ float soldierXSpeed;
 float robotX, robotY;
 float laserX, laserY;
 float laserXSpeed;
-float laserWidth = 0;
-float laserHeight = 10;
+float laserWidth, laserHeight;
+
 
 void setup()
 {
@@ -22,7 +22,7 @@ void setup()
   //soldier
   soldierX = 0;
   soldierY = floor(random(2,6))*80;
-  soldierXSpeed = 3;
+  soldierXSpeed = 4;
   
   //robot
   robotX = floor(random(2,8))*80;
@@ -32,7 +32,8 @@ void setup()
   laserX = robotX+25;
   laserY = robotY+37;
   laserXSpeed = 2;
- 
+  laserWidth = 10;
+  laserHeight = 10;
 }
 
 void draw()
@@ -68,13 +69,31 @@ void draw()
   image(robot, robotX, robotY);
   
   //PartIII:
-  //laser
+  //laser drawing
   noStroke();
   fill(255,0,0);
   arc(laserX, laserY, 10, 10, HALF_PI, PI+HALF_PI, CHORD);
-  arc(laserX+laserWidth, laserY, 10, 10, -HALF_PI, HALF_PI, CHORD);
-  rect(laserX, laserY-5, laserWidth, laserHeight);
+  arc(laserX+laserWidth-10, laserY, 10, 10, -HALF_PI, HALF_PI, CHORD);
+  rect(laserX, laserY-5, laserWidth-10, laserHeight);
   
-  //laserX -= laserXSpeed;
+  //laser shooting
+  laserX -= laserXSpeed;
+  laserWidth += laserXSpeed;
   
+  //laser max width
+  if(laserWidth >= 40)
+  {
+    laserWidth = 40;
+  }
+  
+  //laser move range
+  if(laserX <= robotX-160+5)
+  {
+    //shoot again
+    laserX = robotX+25;
+    laserY = robotY+37;
+    laserXSpeed = 2;
+    laserWidth = 10;
+    laserHeight = 10;
+  }
 }
