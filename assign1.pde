@@ -20,7 +20,7 @@ void setup()
   soldier = loadImage("img/soldier.png");
   
   //soldier
-  soldierX = 0;
+  soldierX = -80;
   soldierY = floor(random(2,6))*80;
   soldierXSpeed = 4;
   
@@ -63,7 +63,10 @@ void draw()
   
   //soldier left to right
   soldierX += soldierXSpeed;
-  soldierX %= 640+80;
+  if(soldierX >= 640)
+  {
+    soldierX = -80;
+  }
   
   //robot random appear
   image(robot, robotX, robotY);
